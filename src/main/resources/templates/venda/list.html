@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html th:replace="fragments/layout::layout(~{::head}, ~{::main})" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<main>
+<table class="table " border="1">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Data</th>
+        <th>Comprador</th>
+        <th>Total</th>
+        <th>Itens</th>
+        <th></th>
+
+    </tr>
+    </thead>
+    <tr th:each="venda : ${vendas}">
+        <td th:text="${venda.id}"> </td>
+        <td th:text="${venda.data}"> </td>
+        <td  type="text"  th:text="${venda.cliente.nome}"> </td>
+        <td th:text="${#numbers.formatCurrency(venda.total())}"> </td>
+        <td> <a th:href="'/vendas/list/'+${venda.id}">🔍</a> </td>
+        <td> <a onclick="return window.confirm('Tem certeza que deseja excluir este registro?')"  th:href="@{/vendas/remove/{id}(id=${venda.id})}">Excluir</a> </td>
+    </tr>
+</table>
+</main>
+</body>
+</html>

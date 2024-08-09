@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html th:replace="fragments/layout::layout(~{::head}, ~{::main})" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Carrinho</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<main>
+
+    <a class="sem-sublinhado" onclick="return window.confirm('Tem certeza que deseja fechar o carrinho?')"
+       th:href="@{/vendas/finalizar}">Fechar Carrinho ❌</a>
+
+    <table class="table" border="1">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Descrição</th>
+            <th>Preço/u</th>
+            <th>Quantidade</th>
+            <th>Remover</th>
+        </tr>
+        </thead>
+        <tr th:each="item : ${carrinho.itemVendaList}">
+            <div th:each="erro : ${#fields.detailedErrors()}">
+                <span th:text="${erro.fieldName}+' '+${erro.message}"></span>
+            </div>
+            <td th:text="${item.produto.id}"></td>
+            <td th:text="${item.produto.nome}"></td>
+            <td th:text="${#numbers.formatCurrency(item.produto.valor)}"></td>
+            <td th:text="${item.getQuantidade()}" e></td>
+            <td class="center"><a class="sem-sublinhado"
+                                  onclick="return window.confirm('Tem certeza que deseja excluir este registro?')"
+                                  th:href="@{/vendas/carrinho/remove/{id}(id=${item.produto.id})}">❌</a></td>
+        </tr>
+    </table>
+</main>
+</body>
+</html>

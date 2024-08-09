@@ -1,0 +1,38 @@
+body {
+    padding: 10px 10px 60px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.table{
+    width: 600px;
+}
+form{
+    width: 600px;
+}
+#meu_header{
+    margin:0px;
+    padding:0px;
+    text-align: start;
+    width: 100%;
+}
+.sem-sublinhado:hover{
+    text-decoration: none;
+    background: beige;
+    border-radius: 10px;
+}
+.center{
+    text-align: center;
+}
+
+.pesquisa .row {
+    padding: 5px;
+}
+
+#preco{
+    text-align: center;
+    align-items: center;
+}

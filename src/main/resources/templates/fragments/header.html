@@ -1,0 +1,33 @@
+<header id="meu_header" class="container" th:fragment="header">
+<img id="logo"  src="/image/modelo%20de%20logo.png" alt="logo">
+    <ul class="nav nav-tabs">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+               aria-expanded="false">Produto</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="/produtos/form">Cadastrar Produto</a>
+                <a class="dropdown-item" href="/produtos/list">Lista de Produtos</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+               aria-expanded="false">Pessoa</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="/pessoas/form">Cadastrar</a>
+                <a class="dropdown-item" href="/pessoas/list">Lista de Cliente</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+        aria-expanded="false">Venda</a>
+        <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Cadastrar Venda</a>
+                <a class="dropdown-item" href="/vendas/list">Lista de vendas</a>
+            </div>
+        </li>
+        <li class="center"><a class="sem-sublinhado " href="/vendas/carrinho">Carrinho 🛒</a></li>
+    </ul>
+
+</header>
+
+

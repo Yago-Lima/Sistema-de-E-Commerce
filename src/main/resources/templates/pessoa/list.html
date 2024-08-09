@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html th:replace="fragments/layout::layout(~{::head}, ~{::main})" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body  >
+<main>
+
+<table class="table " border="1">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>CNPJ</th>
+        <th>Telefone</th>
+        <th>Endereço</th>
+    </tr>
+    </thead>
+    <tr th:each="pessoa : ${pessoas}">
+
+        <td th:text="${pessoa.id}"> </td>
+        <td  th:text="${pessoa.nome}"> </td>
+        <td th:if="pessoa.cpf != null" th:text="${pessoa.cpf}"> </td>
+        <td  th:if="pessoa.cnpj != null" th:text="${pessoa.cnpj}"> </td>
+        <td th:text="${pessoa.telefone}"> </td>
+        <td th:text="${pessoa.endereco}"> </td>
+        <td> <a th:href="@{/pessoas/edit/{id}(id=${pessoa.id})}">Editar</a> </td>
+        <td> <a onclick="return window.confirm('Tem certeza que deseja excluir este registro?')"  th:href="@{/pessoas/remove/{id}(id=${pessoa.id})}">Excluir</a> </td>
+    </tr>
+</table>
+</main>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html th:replace="fragments/layout::layout(~{::head}, ~{::main})" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<main>
+<h1>Cadastrar Produto</h1>
+
+<form  th:action="${produto.id == null ? '/produtos/save' : '/produtos/update'}" th:object="${produto}" method="post">
+    <div th:each="erro : ${#fields.detailedErrors()}">
+        <span th:text="${erro.fieldName}+' '+${erro.message}"></span>
+    </div>
+    <div class="alert alert-success" role="alert" th:if="!${#strings.isEmpty(mensagem)}">
+        <span th:text="${mensagem}"></span>
+    </div>
+    <input type="hidden" th:field="*{id}">
+    <input type="text" th:field="*{nome}" placeholder="descricao">
+    <input type="text" th:field="*{valor}" placeholder="valor">
+    <input type="submit" value="Enviar">
+</form>
+</main>
+</body>
+</html>

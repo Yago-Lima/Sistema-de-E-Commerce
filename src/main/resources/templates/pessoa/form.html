@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/layout::layout(~{::head}, ~{::main})}" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<main>
+<h4>Cadastrar Cliente</h4>
+
+    <form th:action="${pessoa.id == null} ? '/pessoas/save' : '/pessoas/update'"
+          th:object="${pessoa}" method="post">
+        <div class="container">
+
+            <input type="hidden" th:field="*{id}">
+            <div class="row p-2">
+                <div th:each="erro : ${#fields.detailedErrors()}">
+                    <span class="alert alert-danger" th:text="${erro.fieldName}+' '+${erro.message}"></span>
+                </div>
+                <div class="alert alert-success" role="alert" th:if="!${#strings.isEmpty(mensagem)}">
+                    <span th:text="${mensagem}"></span>
+                </div>
+            </div>
+            <div class="row p-2">
+                <div class="col">
+                    <input class="form-control" type="text" th:field="*{nome}" placeholder="Nome">
+                </div>
+            </div>
+            <div class="row p-2">
+                <div class="col">
+                    <input class="form-control" type="text" th:field="*{cpf}" placeholder="cpf">
+                </div>
+                <div class="col">
+                    <input class="form-control" type="text" th:field="*{cnpj}" placeholder="cpnj">
+                </div>
+            </div>
+            <div class="row p-2">
+                <div class="col">
+                    <input class="form-control" type="text" th:field="*{telefone}" placeholder="telefone">
+                </div>
+                <div class="col">
+                    <input class="form-control" type="text" th:field="*{endereco}" placeholder="endereço">
+                </div>
+            </div>
+            <div class="row p-2">
+                <div class="col">
+                    <input class="btn btn-primary mb-3" type="submit" value="Enviar">
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</main>
+</body>
+</html>
