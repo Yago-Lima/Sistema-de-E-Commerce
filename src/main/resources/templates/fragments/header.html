@@ -1,11 +1,11 @@
-<header id="meu_header" class="container" th:fragment="header">
-<img id="logo"  src="/image/modelo%20de%20logo.png" alt="logo">
+<header id="meu_header" class="container" th:fragment="header" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <img id="logo" src="/image/modelo%20de%20logo.png" alt="logo">
     <ul class="nav nav-tabs">
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                aria-expanded="false">Produto</a>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="/produtos/form">Cadastrar Produto</a>
+                <a sec:authorize="hasAnyRole('ADMIN')" class="dropdown-item" href="/produtos/form">Cadastrar Produto</a>
                 <a class="dropdown-item" href="/produtos/list">Lista de Produtos</a>
             </div>
         </li>
@@ -14,20 +14,33 @@
                aria-expanded="false">Pessoa</a>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="/pessoas/form">Cadastrar</a>
-                <a class="dropdown-item" href="/pessoas/list">Lista de Cliente</a>
+                <a sec:authorize="hasAnyRole('ADMIN')" class="dropdown-item" href="/pessoas/list">Lista de Cliente</a>
             </div>
         </li>
-        <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-        aria-expanded="false">Venda</a>
-        <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Cadastrar Venda</a>
+        <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+               aria-expanded="false">Venda</a>
+            <div class="dropdown-menu">
+                <a sec:authorize="hasAnyRole('ADMIN')" class="dropdown-item" href="#">Cadastrar Venda</a>
                 <a class="dropdown-item" href="/vendas/list">Lista de vendas</a>
             </div>
         </li>
-        <li class="center"><a class="sem-sublinhado " href="/vendas/carrinho">Carrinho 🛒</a></li>
+        <!-- Div para alinhar à direita -->
+        <div class="ml-auto d-flex align-items-center">
+            <li class="nav-item">
+                <a class="nav-link" href="/vendas/carrinho">Carrinho 🛒</a>
+            </li>
+            <li class="nav-item d-flex align-items-center" sec:authorize="isAuthenticated()">
+                <p class="mb-0 mr-2"><strong sec:authentication="name"></strong></p>
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="logout">
+                </form>
+            </li>
+            <li class="nav-item" sec:authorize="!isAuthenticated()">
+                <form th:action="'/login'" method="get">
+                    <input type="submit" value="login">
+                </form>
+            </li>
+        </div>
     </ul>
-
 </header>
-
-

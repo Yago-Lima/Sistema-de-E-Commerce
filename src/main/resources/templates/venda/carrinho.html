@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html th:replace="fragments/layout::layout(~{::head}, ~{::main})" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="fragments/layout::layout(~{::head}, ~{::main})" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Carrinho</title>
     <meta charset="UTF-8">
@@ -8,8 +9,11 @@
 <body>
 <main>
 
-    <a class="sem-sublinhado" onclick="return window.confirm('Tem certeza que deseja fechar o carrinho?')"
+    <a sec:authorize="isAuthenticated()" class="sem-sublinhado" onclick="return window.confirm('Tem certeza que deseja fechar o carrinho?')"
        th:href="@{/vendas/finalizar}">Fechar Carrinho ❌</a>
+
+    <a sec:authorize="!isAuthenticated()" class="sem-sublinhado" onclick="return window.confirm('Necessario fazer login para continuar')"
+       th:href="'/login'">Fechar Carrinho ❌</a>
 
     <table class="table" border="1">
         <thead>

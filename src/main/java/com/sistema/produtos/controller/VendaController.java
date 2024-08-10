@@ -74,10 +74,11 @@ public class VendaController {
     }
     @GetMapping("/finalizar")
     public ModelAndView finalizarVenda(@ModelAttribute("carrinho") Venda carrinho){
-        pessoaR.save(new Pessoa("maria","rua 8","64999","adsd","21312321",new ArrayList<>()));
-        carrinho.setCliente(pessoaR.findById(1L));
+        carrinho.setCliente(new Pessoa("maria","rua 8","64999","adsd","21312321"));
+        carrinho.getCliente().getVendas().add(carrinho);
 
-        vr.save(carrinho);
+          vr.save(carrinho);
+        carrinho = getVenda();
         return new ModelAndView("redirect:vendas/list");
     }
     @GetMapping("/list")

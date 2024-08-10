@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,13 +19,17 @@ public class Pessoa extends AbstractEntity<Long> {
     @OneToMany(mappedBy = "cliente")
     private List<Venda> vendas;
 
-    public Pessoa(String nome, String endereco, String telefone, String cpf, String cnpj, List<Venda> vendas) {
+    public Pessoa(String nome, String endereco, String telefone, String cpf, String cnpj) {
         this.nome = nome;
         this.endereco = endereco;
         this.telefone = telefone;
         this.cpf = cpf;
         this.cnpj = cnpj;
-        this.vendas = vendas;
+        this.vendas = new ArrayList<>();
+    }
+
+    public Pessoa() {
+
     }
 
     public List<Venda> getVendas() {

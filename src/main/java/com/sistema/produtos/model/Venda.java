@@ -12,10 +12,9 @@ public class Venda extends AbstractEntity<Long>{
 
 
     @ManyToOne
-    @JoinColumn(nullable = false)
     private Pessoa cliente;
 
-    @Column( columnDefinition = "TIMESTAMP", nullable = false)
+    @Column( columnDefinition = "TIMESTAMP")
     private LocalDateTime data;
 
     @OneToMany(mappedBy = "venda")
