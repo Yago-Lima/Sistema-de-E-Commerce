@@ -1,9 +1,12 @@
 package com.sistema.produtos;
 
 
+import com.sistema.produtos.model.security.UsuarioDetailsConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
@@ -20,11 +23,14 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity //indica ao Spring que serão definidas configurações personalizadas de segurança
 public class SecurityConfiguration {
 
+    @Autowired
+    UsuarioDetailsConfig usuarioDetailsConfig;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(
                         customizer ->
                                 customizer
+                                        .requestMatchers("/h2-console/**").permitAll()
                                         .requestMatchers("/").permitAll()
                                         .requestMatchers("/home").permitAll()
                                         .requestMatchers("/pessoa/form").permitAll()
@@ -35,6 +41,7 @@ public class SecurityConfiguration {
                                         .requestMatchers("/image/**").permitAll()
                                         .requestMatchers("/css/**").permitAll()
                                         .requestMatchers(HttpMethod.GET,"/pessoas/form").permitAll()
+                                        .requestMatchers(HttpMethod.GET,"/produtos/list").permitAll()
                                         .requestMatchers(HttpMethod.POST,"/pessoas/save").permitAll()
                                         .requestMatchers(HttpMethod.POST,"/vendas/add").permitAll()
                                         .requestMatchers(HttpMethod.GET,"/vendas/finalizar").hasAnyRole("ADMIN","USER")
@@ -53,7 +60,7 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-    @Bean
+   /* @Bean
     public InMemoryUserDetailsManager userDetailsService() {
         UserDetails user1 = User.withUsername("user")
                 .password(passwordEncoder().encode("123"))
@@ -64,6 +71,11 @@ public class SecurityConfiguration {
                 .roles("ADMIN")
                 .build();
         return new InMemoryUserDetailsManager(user1, admin);
+    }*/
+
+    @Autowired
+    public void configureUserDetails(final AuthenticationManagerBuilder builder) throws Exception {
+        builder.userDetailsService(usuarioDetailsConfig).passwordEncoder(new BCryptPasswordEncoder());
     }
 
     /**

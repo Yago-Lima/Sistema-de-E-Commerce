@@ -1,6 +1,5 @@
 package com.sistema.produtos.controller;
 
-import com.sistema.produtos.model.Pessoa;
 import com.sistema.produtos.model.Produto;
 import com.sistema.produtos.repository.ProdutoRepository;
 import jakarta.transaction.Transactional;

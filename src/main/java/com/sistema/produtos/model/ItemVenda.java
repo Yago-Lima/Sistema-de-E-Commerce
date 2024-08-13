@@ -2,7 +2,6 @@ package com.sistema.produtos.model;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
