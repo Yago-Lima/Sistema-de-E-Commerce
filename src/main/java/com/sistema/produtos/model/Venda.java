@@ -14,7 +14,6 @@ public class Venda extends AbstractEntity<Long>{
     @ManyToOne
     private Pessoa cliente;
 
-    @Column( columnDefinition = "TIMESTAMP")
     private LocalDateTime data;
 
     @OneToMany(mappedBy = "venda")

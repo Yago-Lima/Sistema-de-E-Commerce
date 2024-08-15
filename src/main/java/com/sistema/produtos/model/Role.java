@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "TB_ROLE")
 public class Role extends AbstractEntity<Long> implements  GrantedAuthority {
 
     private String nome;

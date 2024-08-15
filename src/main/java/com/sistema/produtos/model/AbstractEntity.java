@@ -14,8 +14,7 @@ import java.util.Objects;
 public abstract class AbstractEntity<ID extends Serializable> implements Serializable{
 
     @Id
-    @GeneratedValue(generator = "inc")
-    @GenericGenerator(name = "inc", strategy = "increment")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private ID id;
 
     public ID getId() {

@@ -12,6 +12,7 @@ import java.util.List;
 
 
 @Entity
+@Table(name = "TB_USUARIO")
 public class Usuario extends AbstractEntity<Long> implements UserDetails {
 
     public Usuario(String login, String password, List<Role> roles) {
@@ -29,6 +30,14 @@ public class Usuario extends AbstractEntity<Long> implements UserDetails {
 
     public Usuario() {
 
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     @Override
@@ -64,5 +73,9 @@ public class Usuario extends AbstractEntity<Long> implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+    @Override
+    public String toString() {
+        return "Usuario{id=" + super.getId() + ", login='" + login + "', password='" + password + "'}";
     }
 }

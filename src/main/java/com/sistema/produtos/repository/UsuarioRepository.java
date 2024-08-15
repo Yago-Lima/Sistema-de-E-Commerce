@@ -39,8 +39,10 @@ public class UsuarioRepository implements IUsuarioDao {
     public List<Usuario> findByName(String login) {
         Query query = em.createQuery("SELECT u FROM Usuario u WHERE u.login = :login");
         query.setParameter("login", login.toLowerCase());
+        System.out.println("**********************************\n\n\n\n "+query.getResultList()+" \n\n\n\n**********************************");
         return query.getResultList();
     }
+
     @Override
     public List<Usuario> findAll() {
         return em.createQuery("SELECT u FROM Usuario u").getResultList();
