@@ -25,7 +25,7 @@
             <th>Remover</th>
         </tr>
         </thead>
-        <tr th:each="item : ${carrinho.itemVendaList}">
+        <tr th:each="item : ${venda.itemVendaList}">
             <div th:each="erro : ${#fields.detailedErrors()}">
                 <span th:text="${erro.fieldName}+' '+${erro.message}"></span>
             </div>

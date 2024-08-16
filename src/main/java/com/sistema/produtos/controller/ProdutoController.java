@@ -1,7 +1,9 @@
 package com.sistema.produtos.controller;
 
+import com.sistema.produtos.model.ItemVenda;
 import com.sistema.produtos.model.Produto;
 import com.sistema.produtos.repository.ProdutoRepository;
+import jakarta.annotation.Nullable;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @Transactional
@@ -35,7 +39,7 @@ public class ProdutoController {
     }
 
     @GetMapping("/list")
-    public ModelAndView list(ModelMap model) {
+    public ModelAndView list(ItemVenda itemVenda, ModelMap model) {
         model.addAttribute("produtos", repository.findAll());
         return new ModelAndView("produto/list", model);
     }
@@ -55,5 +59,35 @@ public class ProdutoController {
     public ModelAndView update(@ModelAttribute("produto") Produto produto) {
         repository.update(produto);
         return new ModelAndView("redirect:/produtos/list");
+    }
+    @GetMapping("/search")
+    public ModelAndView search(@RequestParam("nome") String nome,
+                               @Nullable @RequestParam("preco-min") Double precoMin,
+                               @Nullable @RequestParam("preco-max") Double precoMax,
+                               ModelMap model) {
+        List<Produto> produtos;
+        if (!nome.isBlank()) {
+            produtos = repository.findByName(nome);
+            model.addAttribute("produtos", produtos);
+        } else {
+            if (precoMin != null && precoMax != null) {
+                produtos = repository.findByPrice(precoMin, precoMax);
+                model.addAttribute("produtos", produtos);
+            } else {
+                if (precoMin == null) {
+                    precoMin = 1.0;
+                }
+                if (precoMax == null) {
+                    precoMax = 9999999999999.0;
+                }
+                produtos = repository   .findByPrice(precoMin, precoMax);
+                model.addAttribute("produtos", produtos);
+            }
+        }
+        return new ModelAndView("produto/list", model);
+    }
+    @GetMapping("/searchdate")
+    public ModelAndView searchByDate(){
+        return  new ModelAndView();
     }
 }

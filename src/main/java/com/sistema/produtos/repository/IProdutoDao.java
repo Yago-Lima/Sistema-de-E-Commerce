@@ -10,4 +10,6 @@ public interface IProdutoDao {
     void delete(Produto produto);
     Produto findById(Long id);
     List<Produto> findAll();
+    List<Produto> findByName(String nome);
+    List<Produto> findByPrice(Double precoMin, Double precoMax);
 }

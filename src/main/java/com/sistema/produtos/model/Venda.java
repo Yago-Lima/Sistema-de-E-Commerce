@@ -1,14 +1,19 @@
 package com.sistema.produtos.model;
 
 import jakarta.persistence.*;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "TB_VENDA")
-public class Venda extends AbstractEntity<Long>{
+@Scope("session")
+@Component
+public class Venda extends AbstractEntity<Long> implements Serializable{
 
 
     @ManyToOne
@@ -16,8 +21,8 @@ public class Venda extends AbstractEntity<Long>{
 
     private LocalDateTime data;
 
-    @OneToMany(mappedBy = "venda")
-    private List<ItemVenda> itemVendaList;
+    @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL)
+    private List<ItemVenda> itemVendaList = new ArrayList<>();
 
     public Venda() {
         this.data = LocalDateTime.now();

@@ -9,6 +9,7 @@ import com.sistema.produtos.repository.ProdutoRepository;
 import com.sistema.produtos.repository.VendaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 
 @Transactional
 @Controller
-@SessionAttributes("carrinho")
+@Scope("request")
 @RequestMapping("/vendas")
 public class VendaController {
 
@@ -29,56 +30,53 @@ public class VendaController {
     private ProdutoRepository pr;
     @Autowired
     private PessoaRepository pessoaR;
-
-    @ModelAttribute("carrinho")
-    public Venda getVenda() {
-        Venda venda = new Venda();
-        venda.setItemVendaList(new ArrayList<>());
-        return venda;
-    }
+    @Autowired
+    private Venda venda;
 
     @PostMapping("/add")
-    public ModelAndView addItemCarrinho(@RequestParam Long id,
-                                        @RequestParam int quantidade,
-                                        @RequestParam String nome,
-                                        @ModelAttribute("carrinho") Venda carrinho,
+    public ModelAndView addItemCarrinho(ItemVenda itemVenda,
+                                        @RequestParam("produtoID") Long idProduto,
                                         RedirectAttributes attributes) {
 
         boolean existe = false;
-        for (ItemVenda item : carrinho.getItemVendaList()) {
-            if (item.getProduto().getId().equals(id)) {
+        // verifica se existe um produto na lista
+        for (ItemVenda item : venda.getItemVendaList()) {
+            if (item.getProduto().getId().equals(idProduto)) {
                 existe = true;
-                item.setQuantidade(item.getQuantidade() + quantidade);
+                item.setQuantidade(item.getQuantidade() + itemVenda.getQuantidade());
                 break;
             }
         }
-
+        Produto produto = pr.findById(idProduto);
+        itemVenda.setProduto(produto);
+        itemVenda.setVenda(venda);
+        //se não existe o produto na lista
         if (!existe) {
-            Produto produto = pr.findById(id);
             if (produto != null) {
-                carrinho.getItemVendaList().add(new ItemVenda(quantidade, produto, carrinho));
+                venda.getItemVendaList().add(itemVenda);
             } else {
                 attributes.addFlashAttribute("mensagem", "Produto não encontrado.");
                 return new ModelAndView("redirect:/produtos/list");
             }
         }
-
-        attributes.addFlashAttribute("mensagem", String.format("%d x %s adicionado(s) ao carrinho", quantidade, nome));
+        attributes.addFlashAttribute("mensagem", String.format("%d x %s adicionado(s) ao carrinho", itemVenda.getQuantidade(), produto.getNome()));
         return new ModelAndView("redirect:/produtos/list");
     }
 
     @GetMapping("/carrinho")
-    public ModelAndView carrinhoList(@ModelAttribute("carrinho") Venda carrinho){
-        return new ModelAndView("venda/carrinho");
+    public ModelAndView carrinhoList(ModelMap model){
+        model.addAttribute("venda",venda);
+        return new ModelAndView("venda/carrinho",model);
     }
     @GetMapping("/finalizar")
-    public ModelAndView finalizarVenda(@ModelAttribute("carrinho") Venda carrinho){
-        carrinho.setCliente(new Pessoa("maria","rua 8","64999","adsd","21312321"));
-        carrinho.getCliente().getVendas().add(carrinho);
+    public ModelAndView finalizarVenda(){
+        Pessoa p = pessoaR.findById(1L);
+        venda.setCliente(p);
+            venda.getCliente().getVendas().add(venda);
 
-          vr.save(carrinho);
-        carrinho = getVenda();
-        return new ModelAndView("redirect:vendas/list");
+        vr.save(venda);
+        venda = new Venda();
+        return new ModelAndView("redirect:/vendas/list");
     }
     @GetMapping("/list")
     public ModelAndView list(ModelMap model){

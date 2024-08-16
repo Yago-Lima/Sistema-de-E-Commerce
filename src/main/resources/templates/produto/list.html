@@ -38,31 +38,29 @@
             <th>Preço/u</th>
             <th>Editar</th>
             <th>Remover</th>
-            <th></th>
             <th>Quantidade</th>
             <th>Add</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="produto : ${produtos}">
-            <td th:text="${produto.id}"></td>
-            <td th:text="${produto.nome}"></td>
-            <td th:text="${#numbers.formatCurrency(produto.valor)}"></td>
-            <td class="center"><a class="sem-sublinhado" th:href="'/produtos/edit/' + ${produto.id}">📝</a></td>
-            <td class="center"><a class="sem-sublinhado"
-                                  onclick="return window.confirm('Tem certeza que deseja excluir este registro?')"
-                                  th:href="@{/produtos/remove/{id}(id=${produto.id})}">❌</a></td>
-            <td class="center">
-                <form th:action="@{/vendas/add}" method="post" style="display:inline;">
-                    <input type="hidden" th:name="id" th:value="${produto.id}">
-                    <input type="hidden" th:name="nome" th:value="${produto.nome}">
-                    <td><input class="form-control" type="number" th:name="quantidade" th:value="quantidade" min="1"
-                               max="99"></td>
-                    <td>
-                        <button type="submit" class="sem-sublinhado">🛒</button>
-                    </td>
-                </form>
-            </td>
+        <tr th:each="p : ${produtos}">
+            <form th:action="@{/vendas/add}" th:object="${itemVenda}" method="post" style="display:inline;">
+                <input type="hidden" th:name="produtoID" th:value="${p.id}">
+                <td th:text="${p.id}"></td>
+                <td th:text="${p.nome}"></td>
+                <td th:text="${#numbers.formatCurrency(p.valor)}"></td>
+                <td class="center"><a class="sem-sublinhado" th:href="'/produtos/edit/' + ${p.id}">📝</a></td>
+                <td class="center"><a class="sem-sublinhado"
+                                      onclick="return window.confirm('Tem certeza que deseja excluir este registro?')"
+                                      th:href="@{/produtos/remove/{id}(id=${p.id})}">❌</a></td>
+                <td class="center">
+                    <input class="form-control" type="number" th:field="*{quantidade}" min="1"
+                           max="99">
+                </td>
+                <td class="center">
+                    <button type="submit" class="sem-sublinhado">🛒</button>
+                </td>
+            </form>
         </tr>
         </tbody>
     </table>

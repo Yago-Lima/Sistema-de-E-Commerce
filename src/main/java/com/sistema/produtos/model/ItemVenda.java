@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 @Table(name = "TB_ITEM_VENDA")
 public class ItemVenda extends AbstractEntity<Long>{
 
-
     private int quantidade;
 
     @ManyToOne()

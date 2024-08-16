@@ -21,6 +21,7 @@ public class Usuario extends AbstractEntity<Long> implements UserDetails {
         this.roles = roles;
     }
 
+    @Column(unique = true)
     private String login;
 
     private String password;

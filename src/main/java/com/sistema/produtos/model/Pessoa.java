@@ -1,9 +1,6 @@
 package com.sistema.produtos.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +14,7 @@ public class Pessoa extends AbstractEntity<Long> {
     private String telefone;
     private String cpf;
     private String cnpj;
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente" ,cascade = CascadeType.ALL)
     private List<Venda> vendas;
 
     public Pessoa(String nome, String endereco, String telefone, String cpf, String cnpj) {

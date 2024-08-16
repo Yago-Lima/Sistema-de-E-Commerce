@@ -42,6 +42,7 @@ public class SecurityConfiguration {
                                         .requestMatchers(HttpMethod.POST,"/pessoas/save").permitAll()
                                         .requestMatchers(HttpMethod.POST,"/vendas/add").permitAll()
                                         .requestMatchers(HttpMethod.GET,"/vendas/finalizar").hasAnyRole("ADMIN","USER")
+                                        .requestMatchers(HttpMethod.GET,"/produtos/search").permitAll()
                                         .anyRequest() //define que a configuração é válida para qualquer requisição.
                                         .authenticated() //define que o usuário precisa estar autenticado.
                 )

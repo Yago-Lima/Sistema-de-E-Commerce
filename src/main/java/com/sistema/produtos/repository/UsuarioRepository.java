@@ -5,6 +5,7 @@ import com.sistema.produtos.model.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
@@ -36,11 +37,11 @@ public class UsuarioRepository implements IUsuarioDao {
     public Usuario findById(Long id) {
         return em.find(Usuario.class,id);
     }
-    public List<Usuario> findByName(String login) {
-        Query query = em.createQuery("SELECT u FROM Usuario u WHERE u.login = :login");
+    public Usuario findByName(String login) {
+        String jpql = "SELECT u FROM Usuario u WHERE u.login = :login";
+        TypedQuery<Usuario> query = em.createQuery(jpql, Usuario.class);
         query.setParameter("login", login.toLowerCase());
-        System.out.println("**********************************\n\n\n\n "+query.getResultList()+" \n\n\n\n**********************************");
-        return query.getResultList();
+        return query.getSingleResult();
     }
 
     @Override
