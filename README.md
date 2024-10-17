@@ -10,7 +10,7 @@ Este é um projeto educacional desenvolvido para aprimorar a experiência em Jav
 - **Java**: 17
 - **Spring Boot**: 3.3.2
 - **Spring Security**: Implementação de autenticação e autorização
-- **Banco de Dados**: (informe o banco de dados que você está utilizando, como PostgreSQL, MySQL, H2, etc.)
+- **Banco de Dados**: H2
 - **Maven/Gradle**: Para gerenciamento de dependências
 
 ## Funcionalidades
