@@ -3,7 +3,9 @@
 # Sistema de E-Commerce
 
 ## Descrição do Projeto
-Este é um projeto educacional desenvolvido para aprimorar a experiência em Java e explorar novas técnicas usando o Spring Boot. O sistema tem como foco simular um ambiente de E-Commerce, oferecendo funcionalidades de cadastro de produtos e pessoas, gerenciamento de vendas com carrinho de compras, e segurança implementada com Spring Security.
+Este é um projeto educacional desenvolvido para aprimorar a experiência em Java e explorar novas técnicas usando o Spring Boot.
+ O sistema tem como foco simular um ambiente de E-Commerce, oferecendo funcionalidades de cadastro de produtos e pessoas,
+ gerenciamento de vendas com carrinho de compras, e segurança implementada com Spring Security.
 
 ## Tecnologias Utilizadas
 - **Java**: 17
