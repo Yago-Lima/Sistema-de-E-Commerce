@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html th:replace="~{fragments/layout::layout(~{::head}, ~{::main})}" xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{fragments/layout::layout(~{::head}, ~{::main})}" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <body>
 
 <main>
-<h4>Cadastrar Cliente</h4>
+    <h4>Cadastrar Usuário</h4>
 
     <form th:action="${pessoa.id == null} ? '/pessoas/save' : '/pessoas/update'"
           th:object="${pessoa}" method="post">
@@ -11,9 +12,6 @@
 
             <input type="hidden" th:field="*{id}">
             <div class="row p-2">
-                <div th:each="erro : ${#fields.detailedErrors()}">
-                    <span class="alert alert-danger" th:text="${erro.fieldName}+' '+${erro.message}"></span>
-                </div>
                 <div class="alert alert-success" role="alert" th:if="!${#strings.isEmpty(mensagem)}">
                     <span th:text="${mensagem}"></span>
                 </div>
@@ -21,33 +19,60 @@
             <div class="row p-2">
                 <div class="col">
                     <input class="form-control" type="text" th:field="*{nome}" placeholder="Nome">
+                    <span class="alert alert-danger" th:text="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
                 </div>
             </div>
             <div class="row p-2">
                 <div class="col">
                     <input class="form-control" type="text" th:field="*{cpf}" placeholder="cpf">
+                    <span class="alert alert-danger" th:text="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></span>
                 </div>
                 <div class="col">
                     <input class="form-control" type="text" th:field="*{cnpj}" placeholder="cpnj">
+                    <span class="alert alert-danger" th:text="${#fields.hasErrors('cnpj')}" th:errors="*{cnpj}"></span>
                 </div>
             </div>
             <div class="row p-2">
                 <div class="col">
                     <input class="form-control" type="text" th:field="*{telefone}" placeholder="telefone">
+                    <span class="alert alert-danger" th:text="${#fields.hasErrors('telefone')}" th:errors="*{telefone}"></span>
                 </div>
                 <div class="col">
                     <input class="form-control" type="text" th:field="*{endereco}" placeholder="endereço">
+                    <span class="alert alert-danger" th:text="${#fields.hasErrors('endereco')}" th:errors="*{endereco}"></span>
                 </div>
             </div>
+            <div class="row p-2">
+                <div class="col">
+                    <input class='form-control' type='text' th:field='*{usuario.login}' th:value='*{usuario.login}' placeholder='usuario'>
+                    <span class="alert alert-danger" th:text="${#fields.hasErrors('usuario.login')}" th:errors="*{usuario.login}"></span>
+                </div>
+                <div class="col">
+                    <input class="form-control" type="password" th:field="*{usuario.password}" placeholder="senha">
+                    <span class="alert alert-danger" th:text="${#fields.hasErrors('usuario.password')}" th:errors="*{usuario.password}"></span>
+                </div>
+            </div>
+
+            <!-- Checkboxes para as roles -->
+            <div sec:authorize="hasAnyRole('ADMIN')" class="row p-2">
+                <div class="col">
+                    <label>Roles:</label>
+                    <div th:each="role : ${rolesDisponiveis}">
+                        <input type="checkbox" th:field="*{usuario.roles}" th:value="${role}"
+                               th:checked="${#lists.contains(pessoa.usuario.roles, role)}" />
+                        <label th:text="${role.nome}"></label>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="row p-2">
                 <div class="col">
                     <input class="btn btn-primary mb-3" type="submit" value="Enviar">
                 </div>
             </div>
         </div>
-
     </form>
-
 </main>
 </body>
 </html>

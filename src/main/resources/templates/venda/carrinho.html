@@ -20,8 +20,9 @@
         <tr>
             <th>Id</th>
             <th>Descrição</th>
-            <th>Preço/u</th>
             <th>Quantidade</th>
+            <th>Preço/u</th>
+            <th>Sub-Total</th>
             <th>Remover</th>
         </tr>
         </thead>
@@ -31,8 +32,9 @@
             </div>
             <td th:text="${item.produto.id}"></td>
             <td th:text="${item.produto.nome}"></td>
+            <td th:text="${item.getQuantidade()}"></td>
             <td th:text="${#numbers.formatCurrency(item.produto.valor)}"></td>
-            <td th:text="${item.getQuantidade()}" e></td>
+            <td th:text="${#numbers.formatCurrency(item.total())}"></td>
             <td class="center"><a class="sem-sublinhado"
                                   onclick="return window.confirm('Tem certeza que deseja excluir este registro?')"
                                   th:href="@{/vendas/carrinho/remove/{id}(id=${item.produto.id})}">❌</a></td>

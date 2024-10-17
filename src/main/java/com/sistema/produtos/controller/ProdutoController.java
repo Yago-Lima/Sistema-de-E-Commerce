@@ -5,9 +5,11 @@ import com.sistema.produtos.model.Produto;
 import com.sistema.produtos.repository.ProdutoRepository;
 import jakarta.annotation.Nullable;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -27,8 +29,11 @@ public class ProdutoController {
     }
 
     @PostMapping("/save")
-    public ModelAndView save(Produto produto, RedirectAttributes attributes) {
+    public ModelAndView save(@Valid Produto produto, BindingResult result, RedirectAttributes attributes) {
         try {
+            if (result.hasErrors()){
+                return new ModelAndView("produto/form");
+            }
             repository.save(produto);
             attributes.addFlashAttribute("mensagem", produto.getNome() + " Inserido com sucesso!");
         } catch (Exception e) {
@@ -40,6 +45,7 @@ public class ProdutoController {
 
     @GetMapping("/list")
     public ModelAndView list(ItemVenda itemVenda, ModelMap model) {
+        model.addAttribute("itemVenda", itemVenda);
         model.addAttribute("produtos", repository.findAll());
         return new ModelAndView("produto/list", model);
     }
@@ -56,7 +62,10 @@ public class ProdutoController {
     }
 
     @PostMapping("/update")
-    public ModelAndView update(@ModelAttribute("produto") Produto produto) {
+    public ModelAndView update(@ModelAttribute("produto") @Valid Produto produto, BindingResult result) {
+        if (result.hasErrors()){
+            return new ModelAndView("produto/form");
+        }
         repository.update(produto);
         return new ModelAndView("redirect:/produtos/list");
     }

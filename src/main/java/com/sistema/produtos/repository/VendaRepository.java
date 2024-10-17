@@ -40,6 +40,12 @@ public class VendaRepository implements IVendaDao {
         return em.createQuery("from Venda ").getResultList();
     }
 
+    public List<Venda> findByClientName(String name){
+        Query query = em.createQuery("SELECT venda FROM Venda venda WHERE venda.cliente.nome = :name");
+        query.setParameter("name", name);
+        return query.getResultList();
+    }
+
 
     public List<ItemVenda> findAllItemVenda(Long vendaId) {
         Query query = em.createQuery("SELECT item FROM ItemVenda item WHERE item.venda.id = :vendaId");
@@ -48,4 +54,11 @@ public class VendaRepository implements IVendaDao {
     }
 
 
+    public List<ItemVenda> findItensVendaById(Long id) {
+        Query query = em.createQuery(
+                "SELECT item FROM ItemVenda item" +
+                " WHERE item.id = :id");
+        query.setParameter("id", id);
+        return query.getResultList();
+    }
 }

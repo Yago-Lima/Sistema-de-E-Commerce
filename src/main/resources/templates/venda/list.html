@@ -7,6 +7,9 @@
 </head>
 <body>
 <main>
+    <div class="alert alert-warning" role="alert" th:if="!${#strings.isEmpty(mensagem)}">
+        <span th:text="${mensagem}"></span>
+    </div>
 <table class="table " border="1">
     <thead>
     <tr>
@@ -24,7 +27,7 @@
         <td th:text="${venda.data}"> </td>
         <td  type="text"  th:text="${venda.cliente.nome}"> </td>
         <td th:text="${#numbers.formatCurrency(venda.total())}"> </td>
-        <td> <a th:href="'/vendas/list/'+${venda.id}">🔍</a> </td>
+        <td> <a th:href="'/vendas/details/'+${venda.id}">🔍</a> </td>
         <td> <a onclick="return window.confirm('Tem certeza que deseja excluir este registro?')"  th:href="@{/vendas/remove/{id}(id=${venda.id})}">Excluir</a> </td>
     </tr>
 </table>

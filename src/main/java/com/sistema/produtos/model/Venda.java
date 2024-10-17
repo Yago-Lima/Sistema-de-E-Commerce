@@ -1,6 +1,8 @@
 package com.sistema.produtos.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -17,11 +19,14 @@ public class Venda extends AbstractEntity<Long> implements Serializable{
 
 
     @ManyToOne
+    @NotNull(message = "Cliente não pode ser nulo.")
     private Pessoa cliente;
 
+    @NotNull(message = "Data não pode ser nula.")
     private LocalDateTime data;
 
     @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL)
+    @NotEmpty(message = "A lista de itens de venda não pode estar vazia.")
     private List<ItemVenda> itemVendaList = new ArrayList<>();
 
     public Venda() {

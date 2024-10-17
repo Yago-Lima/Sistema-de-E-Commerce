@@ -10,14 +10,14 @@
 <h1>Cadastrar Produto</h1>
 
 <form  th:action="${produto.id == null ? '/produtos/save' : '/produtos/update'}" th:object="${produto}" method="post">
-    <div th:each="erro : ${#fields.detailedErrors()}">
+    <div class="alert alert-danger" th:each="erro : ${#fields.detailedErrors()}">
         <span th:text="${erro.fieldName}+' '+${erro.message}"></span>
     </div>
     <div class="alert alert-success" role="alert" th:if="!${#strings.isEmpty(mensagem)}">
         <span th:text="${mensagem}"></span>
     </div>
     <input type="hidden" th:field="*{id}">
-    <input type="text" th:field="*{nome}" placeholder="descricao">
+    <input type="text" th:field="*{nome}" placeholder="nome">
     <input type="text" th:field="*{valor}" placeholder="valor">
     <input type="submit" value="Enviar">
 </form>

@@ -9,19 +9,21 @@ import java.util.List;
 
 @Entity
 @Table(name = "TB_ROLE")
-public class Role extends AbstractEntity<Long> implements  GrantedAuthority {
+public class Role extends AbstractEntity<Long> implements GrantedAuthority, Serializable {
 
+    @Column(nullable = false, unique = true)
     private String nome;
 
     @ManyToMany(mappedBy = "roles")
-    private List<Usuario> usuarios;
+    private List<Usuario> usuarios = new ArrayList<>();
 
     public Role(String nome) {
         this.nome = nome;
     }
 
-    public Role(){ usuarios = new ArrayList<>();
+    public Role() {
     }
+
     @Override
     public String getAuthority() {
         return nome;
@@ -42,4 +44,5 @@ public class Role extends AbstractEntity<Long> implements  GrantedAuthority {
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
     }
+
 }
