@@ -1,4 +1,3 @@
-Aqui estão as instruções em formato `.md` para você copiar:
 
 ```markdown
 # Sistema de E-Commerce
