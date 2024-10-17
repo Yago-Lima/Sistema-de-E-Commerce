@@ -1,5 +1,4 @@
 
-```markdown
 # Sistema de E-Commerce
 
 ## Descrição do Projeto
